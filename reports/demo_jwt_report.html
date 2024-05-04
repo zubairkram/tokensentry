@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TokenSentry - JWT Security Audit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #090d16;
+            --bg-surface: #101726;
+            --bg-card: #1b2438;
+            --border: #2e3c54;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --cyan: #38bdf8;
+            --red: #ef4444;
+            --amber: #f59e0b;
+            --emerald: #10b981;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, sans-serif;
+            padding: 2rem 1rem;
+        }
+        .container { max-width: 1080px; margin: 0 auto; }
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem;
+        }
+        .brand { display: flex; align-items: center; gap: 0.85rem; }
+        .brand-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1.3rem; color: #fff;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+        }
+        .overview {
+            display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; margin-bottom: 2rem;
+        }
+        @media (max-width: 768px) { .overview { grid-template-columns: 1fr; } }
+        .card {
+            background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-title {
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary);
+            font-weight: 600; margin-bottom: 1rem;
+        }
+        .score-card { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .gauge-svg { width: 140px; height: 140px; }
+        .gauge-bg { fill: none; stroke: #1e293b; stroke-width: 8; }
+        .gauge-fill {
+            fill: none; stroke: #ef4444; stroke-width: 8; stroke-linecap: round;
+            stroke-dasharray: 283; stroke-dashoffset: 212.25;
+            transform: rotate(-90deg); transform-origin: 50% 50%;
+        }
+        .score-text { font-size: 2.2rem; font-weight: 800; fill: var(--text-primary); text-anchor: middle; dominant-baseline: central; }
+        .score-desc { margin-top: 0.5rem; font-weight: 700; color: #ef4444; }
+
+        /* Decoded Token Inspector */
+        .token-inspector {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+        }
+        @media (max-width: 650px) { .token-inspector { grid-template-columns: 1fr; } }
+        .token-box {
+            background: #050811; border: 1px solid var(--border); border-radius: 8px; padding: 1rem;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+        }
+        .token-box pre { white-space: pre-wrap; word-break: break-all; color: #cbd5e1; }
+        .tag-hdr { color: #f43f5e; font-weight: 700; }
+        .tag-pay { color: #a855f7; font-weight: 700; }
+
+        /* Vulnerabilities */
+        .vuln-card {
+            background: var(--bg-card); border-left: 4px solid var(--border); border-radius: 0 8px 8px 0;
+            padding: 1.25rem; margin-bottom: 1rem;
+        }
+        .vuln-card:has(.badge-critical) { border-left-color: var(--red); }
+        .vuln-card:has(.badge-high) { border-left-color: #f97316; }
+        .vuln-card:has(.badge-low) { border-left-color: #3b82f6; }
+        .vuln-top { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+        .vuln-cwe { font-size: 0.8rem; color: var(--cyan); font-family: 'JetBrains Mono', monospace; margin-bottom: 0.5rem; }
+        .vuln-desc { font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.75rem; line-height: 1.5; }
+        .rem-box {
+            background: rgba(15, 23, 42, 0.8); border-radius: 6px; padding: 0.75rem 1rem;
+            font-size: 0.85rem; border: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 0.5rem;
+        }
+        .rem-box strong { color: var(--emerald); }
+        .exploit-box {
+            background: #000; border-radius: 6px; padding: 0.75rem 1rem; border: 1px solid #334155;
+            font-size: 0.8rem;
+        }
+        .exp-title { color: #fbbf24; font-weight: 600; display: block; margin-bottom: 0.25rem; }
+        .exploit-box code { font-family: 'JetBrains Mono', monospace; color: #38bdf8; word-break: break-all; }
+
+        .badge {
+            display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px;
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+        }
+        .badge-critical { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .badge-high { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4); }
+        .badge-low { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+
+        footer {
+            margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+            text-align: center; font-size: 0.8rem; color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="brand">
+                <div class="brand-icon">TS</div>
+                <div>
+                    <h1>TokenSentry Security Audit</h1>
+                    <p>JSON Web Token (JWT) Vulnerability & Cryptographic Policy Engine</p>
+                </div>
+            </div>
+            <div style="text-align: right; font-size: 0.85rem; color: var(--text-secondary);">
+                <div>Algorithm: <strong>HS256</strong></div>
+                <div>Risk Rating: <strong style="color: #ef4444;">CRITICAL</strong></div>
+            </div>
+        </header>
+
+        <div class="overview">
+            <div class="card score-card">
+                <div class="card-title">Token Security Score</div>
+                <svg class="gauge-svg" viewBox="0 0 100 100">
+                    <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
+                    <circle class="gauge-fill" cx="50" cy="50" r="45"></circle>
+                    <text class="score-text" x="50" y="52">25</text>
+                </svg>
+                <div class="score-desc">CRITICAL RISK</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Decoded JWT Token Artifacts (Certiport Domain 1.4)</div>
+                <div class="token-inspector">
+                    <div class="token-box">
+                        <div class="tag-hdr">HEADER (Metadata)</div>
+                        <pre>{
+  "alg": "HS256",
+  "typ": "JWT"
+}</pre>
+                    </div>
+                    <div class="token-box">
+                        <div class="tag-pay">PAYLOAD (Claims)</div>
+                        <pre>{
+  "sub": "user_49102",
+  "username": "john_doe",
+  "role": "standard_user",
+  "email": "john@corp.internal",
+  "ssn": "123-45-6789",
+  "iat": 1793265569
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Security Findings & Exploit Vulnerabilities (3 Identified)</div>
+            
+      <div class="vuln-card">
+        <div class="vuln-top">
+          <span class="badge badge-critical">CRITICAL</span>
+          <strong class="vuln-title">Trivially Guessable HMAC Secret ('secret')</strong>
+          <span class="vuln-cvss">CVSS: 9.1</span>
+        </div>
+        <div class="vuln-cwe">CWE-522: Insufficiently Protected Credentials</div>
+        <p class="vuln-desc">The symmetric signing secret was cracked in 1 attempts using a standard wordlist: 'secret'. Anyone can forge valid tokens.</p>
+        <div class="rem-box">
+          <strong>Recommended Fix:</strong>
+          <p>Rotate the JWT secret immediately. Use a cryptographically secure random string with at least 256 bits of entropy (e.g. `openssl rand -hex 32`).</p>
+        </div>
+        <div class="exploit-box">
+                <span class="exp-title">Forged Administrative Exploit Token (PoC):</span>
+                <code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiam9obkBjb3JwLmludGVybmFsIiwic3NuIjoiMTIzLTQ1LTY3ODkiLCJpYXQiOjE3OTMyNjU1NjksImlzX2FkbWluIjp0cnVlfQ.G5ASexvA0nYSr2W7oLuZipfIT4QmBJOTBUZ9dw46s1A</code>
+               </div>
+      </div>
+    
+      <div class="vuln-card">
+        <div class="vuln-top">
+          <span class="badge badge-high">HIGH</span>
+          <strong class="vuln-title">Missing Token Expiration ('exp' Claim)</strong>
+          <span class="vuln-cvss">CVSS: 7.5</span>
+        </div>
+        <div class="vuln-cwe">CWE-613: Insufficient Session Expiration</div>
+        <p class="vuln-desc">The token does not specify an expiration timestamp. Once issued, stolen tokens remain valid indefinitely.</p>
+        <div class="rem-box">
+          <strong>Recommended Fix:</strong>
+          <p>Always configure a short lifespan (e.g. 15-60 minutes) in the 'exp' claim. Pair with refresh token rotation.</p>
+        </div>
+        
+      </div>
+    
+      <div class="vuln-card">
+        <div class="vuln-top">
+          <span class="badge badge-high">HIGH</span>
+          <strong class="vuln-title">Sensitive Credential/PII Exposed in Claims: 'ssn'</strong>
+          <span class="vuln-cvss">CVSS: 7.2</span>
+        </div>
+        <div class="vuln-cwe">CWE-312: Cleartext Storage of Sensitive Information</div>
+        <p class="vuln-desc">The payload exposes sensitive field 'ssn' in base64url plaintext. Standard JWT claims are readable by any client or proxy.</p>
+        <div class="rem-box">
+          <strong>Recommended Fix:</strong>
+          <p>Remove confidential credentials from JWT claims. If sensitive data must be transmitted, use JWE (JSON Web Encryption) for payload confidentiality.</p>
+        </div>
+        
+      </div>
+    
+        </div>
+
+        <footer>
+            Generated by <strong>TokenSentry v1.0.0</strong> • Aligned with Certiport IT Specialist: Cybersecurity (Domains 1.3, 1.4).
+        </footer>
+    </div>
+</body>
+</html>

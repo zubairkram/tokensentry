@@ -1,0 +1,25 @@
+{
+  "name": "tokensentry",
+  "version": "1.0.0",
+  "description": "JWT & API Security Auditor & Exploitation Toolkit Aligned with OWASP API Security Top 10",
+  "type": "module",
+  "main": "tokensentry.js",
+  "bin": {
+    "tokensentry": "./tokensentry.js"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "start": "node tokensentry.js --demo"
+  },
+  "keywords": [
+    "cybersecurity",
+    "jwt",
+    "security-audit",
+    "api-security",
+    "owasp",
+    "penetration-testing",
+    "vulnerability-scanner"
+  ],
+  "author": "Cybersecurity Portfolio Project",
+  "license": "MIT"
+}

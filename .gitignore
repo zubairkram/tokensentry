@@ -1,0 +1,14 @@
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.vscode/
+.idea/
+*.swp
+
+# Keep sample reports
+reports/token_audit.html
+reports/token_audit.json
+!reports/demo_jwt_report.html
+!reports/demo_jwt_report.json
