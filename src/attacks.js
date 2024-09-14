@@ -1,7 +1,6 @@
 /**
  * Hacker Exploit Simulation & Vulnerability Validation Modules.
  * Tests for CVE-2015-9235 ('none' alg), Algorithm Confusion, and Secret Brute-forcing.
- * Directly implements Certiport Domain 1.4: Strong vs. Weak Encryption Algorithms.
  */
 
 import { parseJwt, signHmac, createJwt, base64UrlEncode } from "./jwt.js";

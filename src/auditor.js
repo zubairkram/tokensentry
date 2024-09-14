@@ -1,8 +1,6 @@
 /**
  * JWT Security Posture & Compliance Auditor.
- * Directly implements:
- * - Certiport Domain 1.3: Access management principles (Auth, tokens, MFA, password policies)
- * - Certiport Domain 1.4: Encryption methods & applications (Cryptographic strength, PKI, data states)
+ * Evaluates tokens against OWASP API Security Top 10 and RFC 7519 standards.
  */
 
 import { parseJwt } from "./jwt.js";
@@ -34,7 +32,7 @@ export function auditJwt(token, options = {}) {
   const findings = [];
   const now = Math.floor(Date.now() / 1000);
 
-  // 1. Audit Algorithm & Cryptographic Strength (Certiport 1.4)
+  // 1. Audit Algorithm & Cryptographic Strength
   const alg = header.alg || "none";
 
   if (alg.toLowerCase() === "none") {
@@ -64,7 +62,7 @@ export function auditJwt(token, options = {}) {
     }
   }
 
-  // 2. Audit Expiration & Token Lifecycle (Certiport 1.3)
+  // 2. Audit Expiration & Token Lifecycle
   if (!payload.exp) {
     findings.push({
       id: "SEC-JWT-003",
@@ -99,7 +97,7 @@ export function auditJwt(token, options = {}) {
     });
   }
 
-  // 3. Audit Sensitive Claims & PII Exposure (Certiport 1.4 Data States)
+  // 3. Audit Sensitive Claims & PII Exposure
   for (const [key, val] of Object.entries(payload)) {
     const keyLower = key.toLowerCase();
     if (SENSITIVE_CLAIM_KEYS.some(k => keyLower.includes(k))) {
