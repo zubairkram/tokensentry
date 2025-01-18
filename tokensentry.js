@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 /**
  * TokenSentry - JWT & API Security Auditor & Exploitation Toolkit
- * CLI Entrypoint.
- * Aligned with Certiport IT Specialist: Cybersecurity (Domains 1.3, 1.4).
+ * CLI Entrypoint for API Penetration Testing & Cryptographic Token Auditing.
  */
 
 import { auditJwt } from "./src/auditor.js";

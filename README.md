@@ -1,27 +1,29 @@
 # TokenSentry 🛡️🔑
 ### High-Performance JWT & API Security Exploitation & Auditing Toolkit
-> **Built in Modern JavaScript (Node.js) • Directly Aligned with Certiport IT Specialist: Cybersecurity (Domains 1.3, 1.4, 2.1, 4.1)**
 
 [![Node.js 18+](https://img.shields.io/badge/node.js-18%2B-green.svg)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
 [![Dependencies: Zero](https://img.shields.io/badge/dependencies-0%20(Standard%20Library)-success.svg)]()
 [![Tests: 5 Passed](https://img.shields.io/badge/tests-5%2F5%20passed-brightgreen.svg)]()
-[![Certiport Aligned](https://img.shields.io/badge/Certiport-IT%20Specialist-orange.svg)]()
+[![OWASP API Top 10](https://img.shields.io/badge/OWASP-API%20Security%20Aligned-orange.svg)]()
 
 **TokenSentry** is a high-speed JSON Web Token (JWT) security auditor and penetration testing exploitation toolkit written in pure modern JavaScript (ES Modules) using **zero external npm dependencies**.
 
-Engineered around **Certiport IT Specialist: Cybersecurity** standards and the **OWASP API Security Top 10**, TokenSentry audits API authentication tokens for critical cryptographic flaws, brute-forces weak HMAC secrets, tests for classic signature bypass vulnerabilities, and generates executive HTML security reports.
+Designed around the **OWASP API Security Top 10** (API1: Broken Object Level Authorization, API2: Broken Authentication) and RFC 7519 standards, TokenSentry audits API authentication tokens for critical cryptographic flaws, brute-forces weak HMAC secrets, tests for signature bypass vulnerabilities, and generates executive HTML security reports.
 
 ---
 
-## 📋 Certiport Exam Objectives Alignment
+## ⚡ Standards & Vulnerability Coverage
 
-| Certiport Exam Objective | Objective Description | TokenSentry Implementation |
+TokenSentry evaluates tokens against industry cryptographic baselines (RFC 7515/7519, NIST SP 800-63B, OWASP):
+
+| Vulnerability Vector | Security Standard | TokenSentry Implementation |
 | :--- | :--- | :--- |
-| **Domain 1.3: Access Management Principles** | Authentication, authorization, token-based identity, password policies, MFA. | Audits token expiration (`exp`), missing issuance (`iat`), session replay windowing, and role-based privilege escalation. |
-| **Domain 1.4: Encryption Methods & Applications** | Types of encryption, hashing, digital signatures, PKI, strong vs. weak algorithms, data at rest vs in transit. | Verifies HMAC-SHA signatures (`HS256`, `HS384`, `HS512`), flags broken algorithms (`none`), checks for cleartext PII/credentials, and demonstrates asymmetric-to-symmetric key confusion. |
-| **Domain 2.1: TCP/IP & HTTP Protocol Vulnerabilities** | HTTP vs. HTTPS, session tokens, cleartext data leakage. | Intercepts unencrypted sensitive claims in bearer tokens (passwords, SSNs, internal roles) transmitted over HTTP APIs. |
-| **Domain 4.1 & 4.2: Vulnerability Identification & Threat Intel** | Active reconnaissance, CVEs, CWE categorization, security reporting. | Maps findings directly to CVE-2015-9235, CVE-2016-5431, CWE-327, CWE-522, and CVSS v3.1 scores. |
+| **Broken Authentication** | OWASP API2:2023 | Audits missing expiration (`exp`), missing issuance (`iat`), clock skew tolerance, and indefinite session validity. |
+| **Algorithmic Cryptographic Flaws** | RFC 7515 / CWE-327 | Verifies HMAC-SHA signatures (`HS256`, `HS384`, `HS512`), exploits `none` algorithm bypass (CVE-2015-9235), and checks for algorithm confusion. |
+| **Weak Secret & Credential Exposure** | CWE-522 / NIST SP 800-63B | High-speed dictionary brute-force attacking weak HMAC keys against top common developer secrets, auto-generating forged PoC tokens. |
+| **Sensitive Data Exposure** | CWE-312 / OWASP API3:2023 | Deep-scans payload claims for unencrypted passwords, SSNs, credit card numbers, and internal infrastructure secrets. |
+| **Privilege Escalation** | CWE-284 / OWASP API5:2023 | Tests for unauthorized administrative role modifications (`role: "admin"`) and signature tampering. |
 
 ---
 
@@ -175,11 +177,13 @@ Output:
 
 ---
 
-## 🗺️ Certiport Cybersecurity Portfolio Roadmap
+## 🗺️ Cybersecurity Portfolio Suite
 
-1. **Project 1: VigilScan (Python)** — Network Vulnerability Scanner & SSL/TLS Audit Engine *(Domains 1.4, 2.1, 2.2, 4.1, 4.2, 4.3)*
-2. **Project 2: TraceGuard SIEM (Python)** — Lightweight Log Analyzer & MITRE ATT&CK Threat Detector *(Domains 1.2, 3.5, 5.1, 5.2, 5.3, 5.4)*
-3. **Project 3 (This Repository): TokenSentry (JavaScript/Node.js)** — JWT & API Security Auditor & Exploit Toolkit *(Domains 1.3, 1.4, 2.1, 4.1)*
+This project is part of a 3-part open-source security tool suite:
+
+1. **[VigilScan (Python)](https://github.com/zubairkram/vigilscan)** — Network Vulnerability Scanner & SSL/TLS Audit Engine
+2. **[TraceGuard SIEM (Python)](https://github.com/zubairkram/traceguard)** — Lightweight Log Analyzer & MITRE ATT&CK Threat Detector
+3. **[TokenSentry (JavaScript)](https://github.com/zubairkram/tokensentry)** — JWT & API Security Exploitation & Auditing Toolkit
 
 ---
 
